@@ -2,27 +2,20 @@ groups:
   - name: instance_alerts
     interval: 30s
     rules:
-      # 사용자별 CPU 과부하
+      # 전체 CPU 과부하
       - alert: HighCPUUsage
-        expr: |
-          sum by (instance, username) (
-            rate(namedprocess_namegroup_cpu_seconds_total[5m])
-          ) / on(instance) group_left
-          count by (instance) (
-            node_cpu_seconds_total{mode="idle"}
-          ) > 0.9
-        for: 5m
+        expr: (1 - avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) by (instance)) > 0.95
+        for: 1h
         labels:
           severity: warning
         annotations:
           summary: "{{ $labels.instance }} CPU 과부하"
           description: "CPU 사용률 {{ $value | humanizePercentage }}"
-          user: "{{ $labels.username }}"
 
       # 메모리 부족
       - alert: HighMemoryUsage
-        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.9
-        for: 3m
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) > 0.70
+        for: 0s
         labels:
           severity: warning
         annotations:
@@ -31,11 +24,22 @@ groups:
 
       # 디스크 부족
       - alert: DiskSpaceLow
-        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) < 0.1
-        for: 5m
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) < 0.05
+        for: 1h
         labels:
           severity: warning
           admin_only: "true"
         annotations:
           summary: "{{ $labels.instance }} 디스크 부족"
           description: "디스크 여유 공간 {{ $value | humanizePercentage }}"
+
+      # 서버 응답 없음
+      - alert: InstanceDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: critical
+          admin_only: "true"
+        annotations:
+          summary: "{{ $labels.instance }} 서버 응답 없음"
+          description: "{{ $labels.job }} 서버가 5분 이상 응답하지 않습니다"

@@ -39,12 +39,18 @@
                 "value": 0
               },
               {
+                "color": "yellow",
+                "value": 75
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 90
               }
             ]
           },
-          "unit": "short"
+          "unit": "percent",
+          "min": 0,
+          "max": 100
         },
         "overrides": [
           {
@@ -56,18 +62,6 @@
               {
                 "id": "displayName",
                 "value": "Used"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Total"
               }
             ]
           }
@@ -108,16 +102,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "sum(rate(node_cpu_seconds_total{instance=\"$instance\", mode!=\"idle\"}[1m]))",
+          "expr": "sum(rate(node_cpu_seconds_total{instance=\"$instance\", mode!=\"idle\"}[1m])) / count(node_cpu_seconds_total{instance=\"$instance\", mode=\"idle\"}) * 100",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "count(node_cpu_seconds_total{instance=\"$instance\", mode=\"idle\"}) by (instance)",
-          "refId": "B"
         }
       ],
       "title": "CPU 사용량 (시스템 전체)",
@@ -140,12 +126,18 @@
                 "value": 0
               },
               {
+                "color": "yellow",
+                "value": 75
+              },
+              {
                 "color": "red",
-                "value": 80
+                "value": 90
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "percent",
+          "min": 0,
+          "max": 100
         },
         "overrides": [
           {
@@ -157,18 +149,6 @@
               {
                 "id": "displayName",
                 "value": "Used"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byFrameRefID",
-              "options": "B"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Total"
               }
             ]
           }
@@ -209,18 +189,9 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "expr": "node_memory_MemTotal_bytes{instance=\"$instance\"} - node_memory_MemAvailable_bytes{instance=\"$instance\"}",
+          "expr": "(node_memory_MemTotal_bytes{instance=\"$instance\"} - node_memory_MemAvailable_bytes{instance=\"$instance\"}) / node_memory_MemTotal_bytes{instance=\"$instance\"} * 100",
           "legendFormat": "Used",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "expr": "node_memory_MemTotal_bytes{instance=\"$instance\"}",
-          "legendFormat": "Total",
-          "refId": "B"
         }
       ],
       "title": "MEMORY 사용량 (시스템 전체)",
