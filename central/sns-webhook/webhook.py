@@ -10,8 +10,6 @@ app = Flask(__name__)
 ses_client = boto3.client(
     'ses',
     region_name='us-east-1',
-    aws_access_key_id='REMOVED_EXPOSED_CREDENTIAL',
-    aws_secret_access_key='REMOVED_EXPOSED_CREDENTIAL'
 )
 
 FROM_EMAIL = 'noreply@example.com'

@@ -29,8 +29,20 @@ S3 사용량·비용 모니터링 수집기 (독립 컨테이너, 포트 9104)
 ## 배포
 
 ### 중앙 서버
+
+SNS/SES 웹훅은 Boto3 기본 자격 증명 체인을 사용합니다. 배포 환경의 IAM 역할에
+필요한 SNS/SES 권한을 부여하고 컨테이너에서 해당 역할을 사용할 수 있어야 합니다.
+개발 환경에서 환경변수를 쓰는 경우 `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`,
+임시 자격 증명의 `AWS_SESSION_TOKEN`을 컨테이너에 명시적으로 전달해야 합니다.
+호스트 셸의 환경변수는 현재 Compose 설정으로 자동 전달되지 않습니다.
+키 값은 소스·Compose 파일·이미지에 넣지 마세요.
+
+기존 `sns-webhook:latest` 이미지에도 이전 키가 남을 수 있으므로, 자격 증명을
+외부에서 공급하도록 준비한 뒤 수정한 소스로 이미지를 다시 빌드해야 합니다.
+
 ```bash
 cd central
+docker build -t sns-webhook:latest ./sns-webhook
 docker compose up -d
 ```
 

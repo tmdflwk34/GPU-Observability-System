@@ -9,8 +9,6 @@ app = Flask(__name__)
 sns_client = boto3.client(
     'sns',
     region_name='us-west-2',
-    aws_access_key_id='REMOVED_EXPOSED_CREDENTIAL',
-    aws_secret_access_key='REMOVED_EXPOSED_CREDENTIAL'
 )
 
 TOPIC_ARN = 'arn:aws:sns:us-west-2:123456789012:alertmanager-notifications'
