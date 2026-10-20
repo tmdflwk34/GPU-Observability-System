@@ -1,2 +1,7 @@
 prometheus-data/
 *.log
+
+# 비밀값 파일은 커밋하지 않는다
+.env
+**/.env
+central/grafana/grafana.env
