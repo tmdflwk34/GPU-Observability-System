@@ -65,7 +65,7 @@ Prometheus에서 수집된 메트릭을 Grafana로 시각화합니다. 인스턴
 
 ### GPU 사용자 현황
 
-![GPU Overview](docs/images/grafana-gpu-overview.png)
+> _GPU Overview 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **시스템 요약**: CPU 사용량(Used/Total 코어), Memory 사용량(GiB/TiB) 한눈에 확인
 - **GPU 상태 테이블**: GPU 번호별 사용률(%), 점유 사용자, 상태(active/idle/idle_long) 표시
@@ -73,14 +73,14 @@ Prometheus에서 수집된 메트릭을 Grafana로 시각화합니다. 인스턴
 
 ### CPU 사용자 현황
 
-![CPU Usage](docs/images/grafana-cpu-usage.png)
+> _CPU Usage 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **사용자별 CPU 코어 사용량**: 각 사용자가 점유 중인 CPU 코어 수를 시계열로 표시
 - 범례에서 Last(현재)/Max(최대) 값으로 사용자별 리소스 점유 현황 파악 가능
 
 ### FSx 사용 현황 (AWS)
 
-![FSx Storage](docs/images/grafana-fsx-storage.png)
+> _FSx Storage 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **디스크 사용량 (도넛 차트)**: 전체 FSx 볼륨의 실제 디스크 사용률 (압축 후 기준)
 - **경로별 용량**: home / s3 / tmp 경로별 실시간 사용량(TiB)
@@ -99,7 +99,7 @@ S3 스토리지 비용 최적화를 위해 프로젝트/소유자/폴더 단위 
 
 ### 개요 (총용량·증감·신선도)
 
-![S3 Overview](docs/images/grafana-s3-overview.png)
+> _S3 Overview 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **현재/비현재 총용량**: 현재 버전과 이전 버전(non-current) 용량을 분리 표시
 - **Unmapped**: `project/` 밖 데이터 용량
@@ -109,7 +109,7 @@ S3 스토리지 비용 최적화를 위해 프로젝트/소유자/폴더 단위 
 
 ### 프로젝트·소유자 Top10 + 폭주 탐지
 
-![S3 Top10](docs/images/grafana-s3-top10.png)
+> _S3 Top10 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **프로젝트별 현재 용량 Top10** [실시간·1분]
 - **Owner별 현재 용량 Top10** [하루 1번] — FSx 파일 소유권 기준 매핑
@@ -117,7 +117,7 @@ S3 스토리지 비용 최적화를 위해 프로젝트/소유자/폴더 단위 
 
 ### 프로젝트 → 폴더 드릴다운
 
-![S3 Drilldown](docs/images/grafana-s3-drilldown.png)
+> _S3 Drilldown 스크린샷: 실제 운영 데이터가 포함되어 저장소에서 제외함_
 
 - **하위폴더별 용량** + **폴더·소유자·용량 클릭 탐색 테이블**
 - 폴더를 클릭하면 하위 폴더로 계속 파고들며 용량/소유자/파일수 확인
